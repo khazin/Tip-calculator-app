@@ -1,71 +1,164 @@
-let billInput = document.querySelector('#billInput');
-let peopleInput = document.querySelector('#peopleInput');
-let customTipInput = document.querySelector('#customTipInput');
-let totalPriceOutput = document.querySelector('#totalPriceOutput');
-let totalTipOutput = document.querySelector('#totalTipOutput');
+class TipCalculator {
+  /*input value*/
+  _value = "";
+  _billValue = "";
+  _peopleValue = "";
+  _customTipPercValue = "";
+  _tipPercValue = "";
 
-let value = '';
-let billValue = '';
-let peopleValue = '';
-let customTipPercValue = '';
-let tipPercValue = '';
+  constructor() {
+    /*input and output element*/
+    this.billInput = document.querySelector("#billInput");
+    this.peopleInput = document.querySelector("#peopleInput");
+    this.customTipInput = document.querySelector("#customTipInput");
+    this.totalPriceOutput = document.querySelector("#totalPriceOutput");
+    this.totalTipOutput = document.querySelector("#totalTipOutput");
+  }
+  /*setter and getter methods*/
+  get value() {
+    return this._value;
+  }
+  set value(value) {
+    this._value = value;
+  }
+  get billValue() {
+    return this._billValue;
+  }
+  set billValue(value) {
+    this._billValue = value;
+  }
+  get peopleValue() {
+    return this._peopleValue;
+  }
+  set peopleValue(value) {
+    this._peopleValue = value;
+  }
+  get customTipPercValue() {
+    return this._customTipPercValue;
+  }
+  set customTipPercValue(value) {
+    this._customTipPercValue = value;
+  }
+  get tipPercValue() {
+    return this._tipPercValue;
+  }
+  set tipPercValue(value) {
+    this._tipPercValue = value;
+  }
+
+  /*store any input values*/
+  storeValue() {
+    document.addEventListener("keyup", (e) => {
+      let element = e.target;
+      if (element.tagName == "INPUT") {
+        this.value = element.value;
+      }
+    });
+  }
+  /*store  bill values*/
+  setBill() {
+    document.addEventListener("keyup", (e) => {
+      let element = e.target;
+      if (element.id == "billInput") {
+        this.billValue = this.value;
+      }
+    });
+  }
+
+  /*store custom % tip values*/
+  setCustomPercTip() {
+    document.addEventListener("keyup", (e) => {
+      let element = e.target;
+      if (element.id == "customTipInput") {
+        this.customTipPercValue = this.value;
+        this.tipPercValue = this.customTipPercValue / 100;
+      }
+    });
+  }
+
+  /*store amt of people values*/
+  setPeople() {
+    document.addEventListener("keyup", (e) => {
+      let element = e.target;
+      if (element.id == "peopleInput") {
+        this.peopleValue = this.value;
+      }
+    });
+  }
+
+  /*store % tip value*/
+  setTipPerc() {
+    document.addEventListener("click", (e) => {
+      let element = e.target;
+      if (
+        element.classList.contains("tip--input") &&
+        element.classList.contains("-button")
+      ) {
+        this.tipPercValue = parseInt(element.value) / 100;
+      }
+    });
+  }
+
+  /*calculate tip per person amount*/
+  calcTipAmount() {
+    let totalTips = (this.billValue * this.tipPercValue) / this.peopleValue;
+    if (!isNaN(totalTips)) {
+      if (!isFinite(totalTips)) {
+        this.totalTipOutput.innerHTML = "$0.00";
+      } else {
+        this.totalTipOutput.innerHTML = "$" + totalTips.toFixed(2);
+      }
+    }
+  }
+
+  /*calculate total cost per person amount*/
+  calcTotalAmount() {
+    let totalValue =
+      (this.billValue * (1 + this.tipPercValue)) / this.peopleValue;
+    if (!isNaN(totalValue)) {
+      if (!isFinite(totalValue)) {
+        this.totalPriceOutput.innerHTML = "$0.00";
+      } else {
+        this.totalPriceOutput.innerHTML = "$" + totalValue.toFixed(2);
+      }
+    }
+  }
+
+  /*calculate everything*/
+  calcAll() {
+    this.calcTipAmount();
+    this.calcTotalAmount();
+  }
+
+  /*set reset*/
+  reset() {
+    document.addEventListener("click", (e) => {
+      let element = e.target;
+      if (element.id == "resetButton") {
+        this.billValue = 0;
+        this.peopleValue = 0;
+        this.customTipPercValue = 0;
+        this.tipPercValue = 0;
+
+        this.billInput.value = "";
+        this.peopleInput.value = "";
+        this.customTipInput.value = "";
+
+        this.totalPriceOutput.innerHTML = "$0.00";
+        this.totalTipOutput.innerHTML = "$0.00";
+      }
+    });
+  }
+}
+
+let tipCalculator = new TipCalculator();
+tipCalculator.storeValue();
+tipCalculator.setBill();
+tipCalculator.setCustomPercTip();
+tipCalculator.setTipPerc();
+tipCalculator.setPeople();
+tipCalculator.reset();
 
 setInterval(() => {
-    document.addEventListener('click', (e) => {
-        let element = e.target;
-        // console.log(e.target);
-        if (element.classList.contains('tip--input') &&
-        element.classList.contains('-button')
-        ) {
-            tipPercValue =  parseInt(e.target.value)/100;
-            // alert(tipPercValue);
-        }
-
-        if (element.id == 'resetButton') {
-            billValue = 0;
-            peopleValue = 0;
-            customTipPercValue = 0;
-            tipPercValue = 0;
-
-            billInput.value = 0;
-            peopleInput.value = 0;
-            customTipInput.value = '';
-
-            totalPriceOutput.innerHTML = '$0.00';
-            totalTipOutput.innerHTML = '$0.00';
-        }
-    })
-    
-    document.addEventListener('keyup', (e) => {
-        let element = e.target;
-      
-    
-        if (
-            //e.key == 'Enter' && 
-        element.tagName == 'INPUT') {
-            value = element.value;
-        }
-        if (element.id == 'billInput') {
-            billValue = value;
-            // alert(billValue);
-        }
-        if (element.id == 'customTipInput') {
-            customTipPercValue = value;
-            tipPercValue = customTipPercValue/100;
-            // alert(tipPercValue);
-        }
-        if (element.id == 'peopleInput') {
-            peopleValue = value;
-            // alert(peopleValue);
-        }
-    
-    })
-    let totalTips = (billValue * (tipPercValue)) / peopleValue;
-    let totalValue = (billValue * (1+tipPercValue)) / peopleValue;
-    if (!isNaN(totalTips)) {
-        totalTipOutput.innerHTML = '$'+totalTips.toFixed(2);
-    }
-    if (!isNaN(totalValue)) {
-        totalPriceOutput.innerHTML = '$'+totalValue.toFixed(2);
-    }
-}, 1000);
+  tipCalculator.calcAll();
+}, 500);
