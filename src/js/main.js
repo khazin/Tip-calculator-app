@@ -13,6 +13,8 @@ class TipCalculator {
     this.customTipInput = document.querySelector("#customTipInput");
     this.totalPriceOutput = document.querySelector("#totalPriceOutput");
     this.totalTipOutput = document.querySelector("#totalTipOutput");
+    this.peopleInputLabel = document.querySelector(".people--label");
+    this.billInputLabel = document.querySelector(".bill--label");
   }
   /*setter and getter methods*/
   get value() {
@@ -50,7 +52,11 @@ class TipCalculator {
   storeValue() {
     document.addEventListener("keyup", (e) => {
       let element = e.target;
+      let regex = /^[0-9\.]+$/;
       if (element.tagName == "INPUT") {
+          if (!element.value.match(regex)) {
+              element.value='';
+          }
         this.value = element.value;
       }
     });
@@ -130,6 +136,29 @@ class TipCalculator {
     this.calcTotalAmount();
   }
 
+  /**
+   * Validate 
+   */
+   validate(label, input) {
+    document.addEventListener("keyup", (e) => {
+      let element = e.target;
+      if (input.value == 0 && input.value != '') {
+          label.classList.add('-error');
+          input.classList.add('-error');
+      } else {
+        label.classList.remove('-error');
+        input.classList.remove('-error');
+      }
+
+  })
+}
+
+    validateAll(){
+        this.validate(this.billInputLabel,this.billInput);
+        this.validate(this.peopleInputLabel,this.peopleInput);
+    }
+
+
   /*set reset*/
   reset() {
     document.addEventListener("click", (e) => {
@@ -157,6 +186,7 @@ tipCalculator.setBill();
 tipCalculator.setCustomPercTip();
 tipCalculator.setTipPerc();
 tipCalculator.setPeople();
+tipCalculator.validateAll();
 tipCalculator.reset();
 
 setInterval(() => {

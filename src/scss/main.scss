@@ -34,7 +34,7 @@ GLOBAL STYLE
 *,
 *::before,
 *::after {
-  padding: 0;
+    padding: 0;
   margin: 0;
   box-sizing: border-box;
   font-size: 62.5%;
@@ -51,8 +51,6 @@ body {
 }
 
 .input {
-  position: relative;
-
   background-color: var(--Light-grayish-cyan-2);
   height: 3.84rem;
   border: none;
@@ -77,8 +75,32 @@ input[type="number"] {
   }
 }
 input:focus {
-  outline: 2px solid var(--Strong-cyan);
+  outline: none;
   box-shadow: 0 0 0 2px var(--Strong-cyan);
+}
+.bill--label,
+.people--label{
+  position: relative;
+
+  &::after{
+    position: absolute;
+    content: "Can't be zero";
+    right: 0;
+    font-size: inherit;
+    color: orange;
+    display: none;
+  }
+
+  &.-error::after{
+    display: initial;
+  }
+}
+
+.bill--input,
+.people--input {
+  &.-error{
+    box-shadow: 0 0 0 2px orange;
+  }
 }
 /************
 MOBILE LAYOUT
@@ -183,7 +205,10 @@ MOBILE LAYOUT
 /*people amt style*/
 .people {
     @include flex-column();
-
+   
+    // &--label.-error::after{
+    //   display: initial;
+    // }
   &--input {
     background-image: url(../../images/icon-person.svg);
     background-repeat: no-repeat;
