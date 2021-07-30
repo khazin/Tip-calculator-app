@@ -13,11 +13,11 @@
   --Space-Mono: "Space Mono", monospace;
 }
 @mixin flex-column {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 @mixin center-flex {
-    justify-content: center;
+  justify-content: center;
   align-items: center;
 }
 @mixin flex-center-row {
@@ -34,7 +34,7 @@ GLOBAL STYLE
 *,
 *::before,
 *::after {
-    padding: 0;
+  padding: 0;
   margin: 0;
   box-sizing: border-box;
   font-size: 62.5%;
@@ -42,27 +42,6 @@ GLOBAL STYLE
 }
 body {
   @include flex-center-column;
-}
-.label {
-  color: var(--Dark-grayish-cyan);
-  font-size: 1.28rem;
-  font-weight: 700;
-  margin-bottom: 0.48rem;
-}
-
-.input {
-  background-color: var(--Light-grayish-cyan-2);
-  height: 3.84rem;
-  border: none;
-  border-radius: 6px;
-
-  text-align: end;
-  color: var(--Very-dark-cyan);
-  font-size: 1.92rem;
-  font-weight: 700;
-  padding: 0 1.52rem;
-
-  cursor: pointer;
 }
 
 input[type="number"] {
@@ -79,10 +58,10 @@ input:focus {
   box-shadow: 0 0 0 2px var(--Strong-cyan);
 }
 .bill--label,
-.people--label{
+.people--label {
   position: relative;
 
-  &::after{
+  &::after {
     position: absolute;
     content: "Can't be zero";
     right: 0;
@@ -91,14 +70,14 @@ input:focus {
     display: none;
   }
 
-  &.-error::after{
+  &.-error::after {
     display: initial;
   }
 }
 
 .bill--input,
 .people--input {
-  &.-error{
+  &.-error {
     box-shadow: 0 0 0 2px orange;
   }
 }
@@ -106,28 +85,59 @@ input:focus {
 MOBILE LAYOUT
 *************/
 .container {
-  width: 37.5rem;
+  width: 100%;
   min-height: 100vh;
   background-color: var(--Light-grayish-cyan);
 
-  @include flex-center-column;
-  justify-content: flex-end;
-
   background-image: url(../../images/logo.svg);
-  background-position: 50% 5.5%;
-  background-size: 7.12rem;
+  background-position: 50% 4.9%;
+  background-size: 8.7rem;
   background-repeat: no-repeat;
+
+  @include flex-center-row();
 }
 .calculator {
+  margin-top: 14.5rem;
   background-color: var(--White);
+  min-height: 100vh;
   width: inherit;
-  min-height: 67.6vh;
-  width: calc(37.5rem * .8);
 
   border-top-left-radius: 25px;
   border-top-right-radius: 25px;
+  padding: 3.1rem;
+  box-shadow: 0px 11px 19px -4px rgba(0, 0, 0, 0.2);
+}
 
-  padding: 2.48rem;
+.input--container {
+  @include flex-column();
+  justify-content: space-between;
+  min-height: 44rem;
+
+  margin-bottom: 2.7rem;
+}
+
+/*input component style*/
+.label,
+.title {
+  color: var(--Dark-grayish-cyan);
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 0.6rem;
+}
+
+.input {
+  background-color: var(--Light-grayish-cyan-2);
+  height: 4.8rem;
+  border: none;
+  border-radius: 6px;
+
+  text-align: end;
+  color: var(--Very-dark-cyan);
+  font-size: 2.4rem;
+  font-weight: 700;
+  padding: 0 1.9rem;
+
+  cursor: pointer;
 }
 
 /*bill style*/
@@ -137,47 +147,36 @@ MOBILE LAYOUT
   &--input {
     background-image: url(../../images/icon-dollar.svg);
     background-repeat: no-repeat;
-    background-position: 1.52rem center;
+    background-position: 1.9rem center;
+    background-size: 1.125rem;
   }
-
-  margin-bottom: 2.64rem;
 }
 
 /*tip style*/
 
 .tip {
+  min-height: 4.7rem;
   &--label {
-    margin-bottom: 1.44rem;
+    margin-bottom: 1.8rem;
   }
   &--input {
     &--wrapper {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-    }
-
-    &:nth-child(even) {
-      justify-self: flex-end;
-    }
-
-    & input {
-      display: none;
+      grid-template-columns: repeat(2, 47%);
+      gap: 1.7rem;
     }
 
     cursor: pointer;
-
-    height: 3.76rem;
-    width: 11.76rem;
+    min-height: 4.7rem;
     background-color: var(--Very-dark-cyan);
 
     border: none;
     border-radius: 4px;
-    margin-bottom: 1.44rem;
 
     color: var(--Light-grayish-cyan);
-    font-size: 1.92rem;
+    font-size: 2.4rem;
     font-weight: 700;
     text-align: center;
-    @include flex-center-row();
 
     &:last-child {
       background-color: var(--Light-grayish-cyan-2);
@@ -187,50 +186,46 @@ MOBILE LAYOUT
         color: var(--Dark-grayish-cyan);
       }
     }
-
+    &.-button:hover, 
+    &.-button:focus {
+      background-color: var(--Strong-cyan);
+      color: var(--Very-dark-cyan);
+      outline: none;
+    }
     &.-button:active {
       background-color: var(--Light-grayish-cyan);
       color: var(--Very-dark-cyan);
     }
-    &.-button:focus {
-        background-color: var(--Strong-cyan);
-        color: var(--Very-dark-cyan);
-        outline: none;
-      }
+   
   }
-
-  margin-bottom: 1.2rem;
 }
 
 /*people amt style*/
 .people {
-    @include flex-column();
-   
-    // &--label.-error::after{
-    //   display: initial;
-    // }
+  @include flex-column();
+
   &--input {
     background-image: url(../../images/icon-person.svg);
     background-repeat: no-repeat;
-    background-position: 1.52rem center;
+    background-position: 1.9rem center;
+    background-size: 1.375rem;
   }
-  margin-bottom: 2.56rem;
 }
 
 /*calc amount style*/
 
 .amount {
-  align-self: center;
   background-color: var(--Very-dark-cyan);
-  height: 20.4rem;
+  height: 26.25rem;
   border-radius: 15px;
   padding: 3.2rem 2rem 2rem 2rem;
+  padding: 4rem 2.5rem 2.5rem 2.5rem;
 
   @include flex-column();
   justify-content: space-between;
 
   &--container {
-    height: 9.12rem;
+    height: 11.4rem;
     @include flex-column();
     justify-content: space-between;
   }
@@ -240,28 +235,28 @@ MOBILE LAYOUT
     justify-content: space-between;
   }
 
-  &--label {
+  &--title {
     color: var(--Light-grayish-cyan);
-    line-height: 1.6rem;
+    line-height: 2rem;
+    margin-bottom: initial;
   }
   & span {
     color: var(--Dark-grayish-cyan);
-    font-size: 1.12rem;
+    font-size: 1.4rem;
   }
 
   &--value {
     color: var(--Strong-cyan);
-    font-size: 2.4rem;
+    font-size: 3rem;
     font-weight: 700;
   }
 
   &--btn {
     background-color: var(--Strong-cyan);
     height: 4.8rem;
-    height: 3.84rem;
     border: none;
     border-radius: 4px;
-    font-size: 1.6rem;
+    font-size: 2rem;
     font-weight: 700;
     color: var(--Very-dark-cyan);
     cursor: pointer;
@@ -269,5 +264,123 @@ MOBILE LAYOUT
     &:active {
       background-color: var(--Light-grayish-cyan);
     }
+
+    &.-disabled {
+      cursor: initial;
+      opacity: 0.2;
+      background-color: rgb(39, 161, 167);
+    }
+  }
+}
+
+/*************
+TABLET LAYOUT
+**************/
+
+@media screen and (min-width: 786px) {
+  .container {
+    width: 100%;
+    min-height: 100vh;
+
+    background-position: 50% 17%;
+    background-size: 8.7rem;
+  }
+
+  .calculator {
+    min-height: 47vh;
+    width: 80%;
+    max-width: 85rem;
+
+    margin-top: 0;
+    border-radius: 25px;
+    padding: 3rem 3.2rem 3rem 4.6rem;
+
+    @include flex-center-row();
+    justify-content: space-between;
+
+    position: absolute;
+    left: 50%;
+    top: 30%;
+    transform: translateX(-50%);
+  }
+
+  .input--container {
+    min-height: 39rem;
+    width: 42%;
+    margin-bottom: 0;
+    margin-right: 4rem;
+  }
+
+  /*tip style*/
+
+  .tip {
+    &--input {
+      &--wrapper {
+        gap: 1.2rem;
+      }
+      min-height: 4.7rem;
+    }
+  }
+
+  /*calc amount style*/
+
+  .amount {
+    height: 42.25rem;
+    width: 41.5rem;
+    padding: 5.2rem 4rem 4rem 4rem;
+
+    &--container {
+      height: 16rem;
+    }
+
+    &--wrapper {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    &--value {
+      font-size: 4rem;
+    }
+  }
+}
+
+/*************
+DESKTOP LAYOUT
+**************/
+
+@media screen and (min-width: 1366px) {
+  .calculator {
+    width: 64%;
+    max-width: 92.15rem;
+  }
+  /*tip style*/
+
+  .tip {
+    &--input {
+      &--wrapper {
+        grid-template-columns: repeat(3, 30%);
+        gap: 1.5rem;
+      }
+    }
+  }
+}
+
+/****************
+ATTRIBUTION STYLE
+*****************/
+.attribution {
+  position: absolute;
+  bottom: .5rem;
+  left: 0;
+  right: 0;
+  margin-top: 2rem;
+  font-size: 1.5rem;
+  color: var(--Very-dark-cyan);
+  text-align: center;
+
+  & a {
+    font-size: 1.5rem;
+    color: var(--Very-dark-cyan);
   }
 }

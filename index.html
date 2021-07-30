@@ -15,6 +15,7 @@
   <body>
     <div class="container">
       <div class="calculator">
+        <div class="input--container">
         <div class="bill">
           <label for="billInput" class="bill--label label">Bill</label>
           <input type="number" id="billInput" class="bill--input input" placeholder="0"/>
@@ -37,38 +38,36 @@
             <button type="button" class="tip--input -button" value="50">
               50%
             </button>
-            <input type="number" id="customTipInput" class="tip--input -input" placeholder="Custom">
+            <input type="number" min="0" max="100" class="tip--input -input tip--perc" id="customTipInput" placeholder="Custom">
           </div>
         </div>
         <div class="people">
           <label for="peopleInput" class="people--label label">Number of People</label>
           <input type="number" id="peopleInput" class="people--input input" placeholder="0"/>
         </div>
+      </div>
         <div class="amount">
           <div class="amount--container">
           <div class="amount--wrapper">
-            <div class="amount--label label">Tip Amount <br> <span>/ person</span></div>
+            <div class="amount--title title">Tip Amount <br> <span>/ person</span></div>
             <div class="amount--value" id="totalTipOutput">$0.00</div>
           </div>
           <div class="amount--wrapper">
-            <div class="amount--label label" >Total<br><span>/ person</span></div>
+            <div class="amount--title title" >Total<br><span>/ person</span></div>
             <div class="amount--value" id="totalPriceOutput">$0.00</div>
           </div>
         </div>
-          <button type="button" class="btn amount--btn" id="resetButton">RESET</button>
+          <button type="button" class="btn amount--btn -disabled" id="resetButton">RESET</button>
         </div>
       </div>
     </div>
    
-<!-- 
     <div class="attribution">
       Challenge by
-      <a href="https://www.frontendmentor.io?ref=challenge" target="_blank"
-        >Frontend Mentor</a
-      >. Coded by <a href="#">Your Name Here</a>.
-    </div> -->
-    <script src="dist/js/main.js">
-    
-    </script>
+      <a href="https://www.frontendmentor.io/challenges/faq-accordion-card-XlyjD0Oam" target="_blank">Frontend Mentor</a>. Coded by
+      <a href="https://github.com/khazin/Tip-calculator-app" target="_blank">Khazin</a>.
+    </div>
+
+    <script src="dist/js/main.js"></script>
   </body>
 </html>
